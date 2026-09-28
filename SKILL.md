@@ -28,19 +28,25 @@ The API has two halves:
 
 You need one thing from the user: an **API key**.
 
-1. In the GetWidget dashboard, open the avatar menu, click **API keys → Create API key** and pick the workspace. A key works in that one workspace only. Only workspace Editors and Owners can create keys.
-2. Pick permissions (scopes):
+If the user hasn't given you a key, walk them through creating one:
 
-| Scope | Allows |
-| --- | --- |
-| `widgets.read` | List and read widgets, widget types, the workspace plan |
-| `widgets.write` | Create and edit widgets, duplicate, discard draft changes |
-| `widgets.publish` | Publish and unpublish (changes live sites, uses plan slots) |
-| `widgets.delete` | Delete widgets |
-| `submissions.read` | Read form entries, job applications, announcement sign-ups |
-| `bookings.read` | Read bookings and check availability |
+1. In the GetWidget dashboard, open the **avatar menu (top right) → API keys → Create API key**.
+2. **Name** it after where it will be used (e.g. "Claude Code").
+3. Pick the **Workspace**. A key works in that one workspace only; for another workspace, create another key. Only workspace Editors and Owners can create keys.
+4. Set the **Permissions** switches. Four are on by default; **Publish widgets** and **Delete widgets** are off and must be switched on deliberately:
 
-If the user hasn't given you a key, ask for one. Keep it in the environment, never in files you commit:
+| Switch in the dashboard | Scope | Allows | Default |
+| --- | --- | --- | --- |
+| Read widgets | `widgets.read` | List and read widgets, widget types, the workspace plan | on |
+| Edit widgets | `widgets.write` | Create and edit widgets, duplicate, discard draft changes | on |
+| Publish widgets | `widgets.publish` | Publish and unpublish (changes live sites, uses plan slots) | off |
+| Delete widgets | `widgets.delete` | Delete widgets | off |
+| Read submissions | `submissions.read` | Read form entries, job applications, announcement sign-ups | on |
+| Read bookings | `bookings.read` | Read bookings and check availability | on |
+
+5. Click **Create** and copy the key (`gw_live_…`). It is shown **once**; if it's lost, revoke it and create a new one.
+
+A key's permissions can't be changed after it's created. If a call fails with `insufficient_scope`, the user creates a new key with that switch on and revokes the old one (the trash icon on the API keys page). A workspace holds at most 25 keys. Keep it in the environment, never in files you commit:
 
 ```bash
 export GW_API_KEY="gw_live_..."

@@ -47,14 +47,16 @@ Copy `SKILL.md` and `references/` into your project and point your agent at `SKI
 
 ## Setup
 
-Create an API key in the GetWidget dashboard: open the avatar menu, then **API keys → Create API key** and pick the workspace the key is for. Workspace Editors and Owners can create keys. Choose the permissions the agent needs:
+Create an API key in the GetWidget dashboard: open the avatar menu, then **API keys → Create API key**. Name it, pick the workspace it's for (a key works in one workspace only), and set the permissions. Workspace Editors and Owners can create keys.
 
-- `widgets.read`: read widgets and widget types
-- `widgets.write`: create and edit widgets
-- `widgets.publish`: publish and unpublish widgets (optional; changes live sites)
-- `widgets.delete`: delete widgets (optional)
-- `submissions.read`: read form entries, job applications and sign-ups
-- `bookings.read`: read bookings and availability
+- **Read widgets** (`widgets.read`): read widgets and widget types. On by default.
+- **Edit widgets** (`widgets.write`): create and edit widgets. On by default.
+- **Publish widgets** (`widgets.publish`): publish and unpublish, which changes live sites. Off by default.
+- **Delete widgets** (`widgets.delete`): delete widgets. Off by default.
+- **Read submissions** (`submissions.read`): form entries, job applications and sign-ups. On by default.
+- **Read bookings** (`bookings.read`): bookings and availability. On by default.
+
+The key is shown once, so copy it then. Permissions can't be changed later: to add one, create a new key and revoke the old one from the same page.
 
 Give the key to your agent as `GW_API_KEY`. The skill finds your workspace from the key.
 

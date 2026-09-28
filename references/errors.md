@@ -29,9 +29,9 @@ Branch on `code`. It is stable across API versions; `message` is for people and 
 | 400 | `never_published` | Nothing live to restore the draft from. |
 | 400 | `wrong_widget_type` | E.g. asking for bookings of a form widget. |
 | 400 | `invalid_json`, `invalid_if_match`, `invalid_idempotency_key` | Fix the request. |
-| 401 | `api_key_missing` / `api_key_invalid` / `api_key_expired` | Ask the user for a valid key (Dashboard → avatar menu → API keys). |
+| 401 | `api_key_missing` / `api_key_invalid` / `api_key_expired` | Ask the user for a valid key (Dashboard → avatar menu → API keys). `api_key_invalid` also means the key was revoked, its creator left or was removed from the workspace, or the workspace was deleted. |
 | 403 | `key_suspended` | The key's creator is now a Viewer. An owner must make them an Editor again, or create a new key. |
-| 403 | `insufficient_scope` | The key lacks `details.requiredScope`. Ask the user to add it to the key. |
+| 403 | `insufficient_scope` | The key lacks `details.requiredScope`. Permissions can't be added to an existing key: ask the user to create a new key with that switch on (e.g. **Publish widgets** for `widgets.publish`) and revoke the old one. |
 | 403 | `plan_limit_reached` | The publish limit is used up. `details` lists the widgets published in this workspace and gives `upgradeUrl`. Offer to unpublish one, or to upgrade. |
 | 404 | `workspace_not_found` | The path names another workspace. Use the id from `GET /v1/key`. |
 | 404 | `widget_not_found`, `booking_not_found`, `submission_not_found`, `service_not_found`, `widget_type_not_found` | The id isn't in this workspace. List to find the right one. |
