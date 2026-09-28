@@ -11,7 +11,7 @@ A published widget's `embed` has everything needed:
 }
 ```
 
-- **The script** loads the widget type (one script per type, even for several widgets of that type on a page). Put it in `<head>` or at the end of `<body>`.
+- **The script** loads the widget type (one script per type, even for several widgets of that type on a page). Put it in `<head>` or at the end of `<body>`. **Always copy its URL from `embed.scriptUrl`; never build it.** The host depends on the environment the API runs in (production and staging serve different scripts, each talking to its own API), so a hand-built `static.getwidget.com` URL renders nothing for a staging widget.
 - **The container** is where the widget renders. Inline widgets (FAQ, form, testimonials, inline booking calendar) appear exactly there. Floating ones (chat buttons, the floating booking button, announcement bars, cookie banners, notifications) position themselves, so the container can go anywhere in `<body>`.
 - The snippet serves the **live** version. Until the widget is published it renders nothing (`live: false`). Later publishes show up without touching the site.
 - The widget loads its own font (Inter) and styles scoped to itself; it doesn't restyle the page.
@@ -47,21 +47,22 @@ The script scans the page for `get-widget-id-…` containers **once, when it loa
 'use client';
 import { useEffect } from 'react';
 
-export default function GetWidget({ id, type }) {
+// scriptUrl: the widget's embed.scriptUrl, copied as is
+export default function GetWidget({ id, scriptUrl }) {
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `https://static.getwidget.com/scripts/${type}.js`;
+    script.src = scriptUrl;
     script.async = true;
     document.body.appendChild(script);
     return () => script.remove();
-  }, [id, type]);
+  }, [id, scriptUrl]);
 
   return <div className={`get-widget-id-${id}`} />;
 }
 ```
 
 ```jsx
-<GetWidget id="6ab638c28add21e08e35d9d9" type="faq" />
+<GetWidget id="6ab638c28add21e08e35d9d9" scriptUrl="https://static.getwidget.com/scripts/faq.js" />
 ```
 
 For a widget on every page (a chat button), render the component once in the root layout. In plain server-rendered pages the two-line snippet works as is, e.g. in `app/layout.jsx` with `next/script`:
@@ -73,6 +74,8 @@ import Script from 'next/script';
 <Script src="https://static.getwidget.com/scripts/whatsapp.js" strategy="afterInteractive" />
 ```
 
+(`src` is that widget's `embed.scriptUrl`.)
+
 ## Checking it worked
 
 Open the page. If nothing shows, the usual causes are:
@@ -80,4 +83,5 @@ Open the page. If nothing shows, the usual causes are:
 - the widget isn't published (`status` must be `published`);
 - the container's id doesn't match the widget id;
 - in an SPA, the script ran before the container existed;
-- a Content-Security-Policy blocks `static.getwidget.com` or the API it calls.
+- the script URL was typed by hand instead of copied from `embed.scriptUrl` (a production script can't load a staging widget);
+- a Content-Security-Policy blocks the script's host or the API it calls.

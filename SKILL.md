@@ -220,7 +220,7 @@ AUTH=(-H "Authorization: Bearer $GW_API_KEY" -H "Content-Type: application/json"
    <div class="get-widget-id-6ab638c28add21e08e35d9d9"></div>
    ```
 
-   The script goes in the page `<head>` (once per widget type), the `<div>` where the widget should appear. Floating widgets (chat buttons, booking launchers, banners) can take the `<div>` anywhere in `<body>`. Later publishes update the site automatically; the snippet never changes. If you can edit the site's code, add it for the user. See [references/install.md](references/install.md) for WordPress, Shopify, Webflow, Wix and Next.js/React.
+   Use `embed.html` (or `embed.scriptUrl` + `embed.containerHtml`) exactly as returned: the script host differs between production and staging, so never write the URL yourself. The script goes in the page `<head>` (once per widget type), the `<div>` where the widget should appear. Floating widgets (chat buttons, booking launchers, banners) can take the `<div>` anywhere in `<body>`. Later publishes update the site automatically; the snippet never changes. If you can edit the site's code, add it for the user. See [references/install.md](references/install.md) for WordPress, Shopify, Webflow, Wix and Next.js/React.
 
 `POST /widgets/{id}/unpublish` takes it off every site (the draft stays). `POST /widgets/{id}/draft/discard` throws away unpublished edits.
 
