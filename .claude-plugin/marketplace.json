@@ -1,0 +1,15 @@
+{
+  "name": "getwidget-skill",
+  "version": "1.0.0",
+  "description": "Build, publish and embed GetWidget website widgets, and read their bookings and form submissions, via the GetWidget API.",
+  "repository": "https://github.com/microdotcompany/getwidget-skill",
+  "author": "Microdot Company",
+  "license": "MIT",
+  "skills": [
+    {
+      "name": "getwidget",
+      "path": "SKILL.md",
+      "description": "Create, update, publish and embed GetWidget widgets; read bookings, availability and submissions."
+    }
+  ]
+}
